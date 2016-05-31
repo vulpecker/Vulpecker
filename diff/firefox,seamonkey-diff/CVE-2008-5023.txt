@@ -1,0 +1,36 @@
+diff --git a/content/xbl/src/nsXBLBinding.cpp b/content/xbl/src/nsXBLBinding.cpp
+--- a/content/xbl/src/nsXBLBinding.cpp
++++ b/content/xbl/src/nsXBLBinding.cpp
+@@ -1368,17 +1368,31 @@ nsXBLBinding::AllowScripts()
+   
+   JSContext* cx = (JSContext*) context->GetNativeContext();
+ 
+   nsCOMPtr<nsIDocument> ourDocument;
+   mPrototypeBinding->XBLDocumentInfo()->GetDocument(getter_AddRefs(ourDocument));
+   PRBool canExecute;
+   nsresult rv =
+     mgr->CanExecuteScripts(cx, ourDocument->NodePrincipal(), &canExecute);
+-  return NS_SUCCEEDED(rv) && canExecute;
++  if (NS_FAILED(rv) || !canExecute) {
++    return PR_FALSE;
++  }
++
++  // Now one last check: make sure that we're not allowing a privilege
++  // escalations here.
++  PRBool haveCert;
++  doc->NodePrincipal()->GetHasCertificate(&haveCert);
++  if (!haveCert) {
++    return PR_TRUE;
++  }
++
++  PRBool subsumes;
++  rv = ourDocument->NodePrincipal()->Subsumes(doc->NodePrincipal(), &subsumes);
++  return NS_SUCCEEDED(rv) && subsumes;
+ }
+ 
+ void
+ nsXBLBinding::RemoveInsertionParent(nsIContent* aParent)
+ {
+   if (mNextBinding) {
+     mNextBinding->RemoveInsertionParent(aParent);
+   }

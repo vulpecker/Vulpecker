@@ -1,0 +1,21 @@
+--- caps/src/nsScriptSecurityManager.cpp	6 Jul 2006 21:07:15 -0000	1.266.2.14
++++ caps/src/nsScriptSecurityManager.cpp	23 Feb 2007 17:51:31 -0000
+@@ -1319,17 +1319,17 @@ nsScriptSecurityManager::CheckLoadURIWit
+         { "mailbox",         DenyProtocol   },
+         { "pop",             AllowProtocol  },
+         { "imap",            DenyProtocol   },
+         { "pop3",            DenyProtocol   },
+         { "news",            AllowProtocol  },
+         { "javascript",      AllowProtocol  },
+         { "ftp",             AllowProtocol  },
+         { "about safe",      AllowProtocol  },
+-        { "about",           ChromeProtocol },
++        { "about",           DenyProtocol   },
+         { "mailto",          AllowProtocol  },
+         { "aim",             AllowProtocol  },
+         { "data",            AllowProtocol  },
+         { "keyword",         DenyProtocol   },
+         { "resource",        ChromeProtocol },
+         { "gopher",          AllowProtocol  },
+         { "datetime",        DenyProtocol   },
+         { "finger",          AllowProtocol  },
