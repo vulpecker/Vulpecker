@@ -1,4 +1,4 @@
-# VulPecker：An Automated Vulnerability Detection System
+# VulPecker: An Automated Vulnerability Detection System Based on Code Similarity Analysis
 
 Vulnerability Patch Database (VPD) contains mappings between CVE-IDs and diffs. 
 A unified diff consists of a sequence of diff hunks. Each hunk contains the changed filename, and a sequence of additions and deletions. Added source code lines are prefixed by a “+” symbol, and deletions are prefixed by a “-”symbol.
